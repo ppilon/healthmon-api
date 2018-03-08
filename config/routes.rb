@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   # RESTful routes
   resources :users, only: %i[index show update]
-
+  resources :health_snapshots, only: %i[create]
   # Custom routes
   post '/sign-up' => 'users#signup'
   post '/sign-in' => 'users#signin'
