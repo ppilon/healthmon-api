@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ProtectedController
-  before_action :set_user, only: %i[update show]
+  before_action :set_user, only: %i[update show, destroy]
   skip_before_action :authenticate, only: %i[signup signin]
 
   # POST '/sign-up'
@@ -60,6 +60,14 @@ class UsersController < ProtectedController
   def update
     if @user.update(user_params)
       render json: @user
+    else
+      render json: @user.errors, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    if @user.destroy
+      head :no_content
     else
       render json: @user.errors, status: :unprocessable_entity
     end

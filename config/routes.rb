@@ -3,7 +3,7 @@
 Rails.application.routes.draw do
 
   # RESTful routes
-  resources :users, only: %i[index show update]
+  resources :users, only: %i[index show update, destroy]
   resources :health_snapshots, only: %i[create]
   # Custom routes
   post '/sign-up' => 'users#signup'
