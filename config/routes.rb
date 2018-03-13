@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-
   # RESTful routes
-  resources :users, only: %i[index show update, destroy]
-  resources :health_snapshots, only: %i[create]
+  resources :users, only: %i[index show update destroy]
+  resources :health_snapshots, only: %i[create index]
   # Custom routes
   post '/sign-up' => 'users#signup'
   post '/sign-in' => 'users#signin'

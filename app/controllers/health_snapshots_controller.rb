@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-class HealthSnapshotsController < OpenReadController
+class HealthSnapshotsController < ProtectedController
   def create
     @health_snapshot = current_user.health_snapshots.build(health_snapshot_params)
-    puts @health_snapshot
     if @health_snapshot.save!
       render json: @health_snapshot, status: :created
     else
@@ -11,12 +10,17 @@ class HealthSnapshotsController < OpenReadController
     end
   end
 
+  def index
+    @health_snapshots = current_user.health_snapshots
+    render json: @health_snapshots
+  end
+
   private
 
-  def health_snapshot_params
-    params.require(:health_snapshot).permit(
-      :value, :snapshot_type, :source_name, :snapshot_type,
-      :start_date, :end_date, :snapshot_creation_date, :unit
+  def health_snapshots_params
+    params.require(:health_snapshots).permit(
+      :value, :snapshot_type, :source_name, :snapshot_type, :start_date,
+      :end_date, :snapshot_creation_date, :unit
     )
   end
 end
