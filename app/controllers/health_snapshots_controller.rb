@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 class HealthSnapshotsController < ProtectedController
   before_action :set_health_snapshot, only: %i[show update destroy]
 
@@ -32,6 +31,14 @@ class HealthSnapshotsController < ProtectedController
   def index
     @health_snapshots = current_user.health_snapshots
     render json: @health_snapshots
+  end
+
+  def upload
+    @import = Importer.new(
+      parser: XmlParser.new(params[:import][:file]),
+      current_user: current_user
+    )
+    render json: @import.run_import
   end
 
   private
